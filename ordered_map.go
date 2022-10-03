@@ -1,0 +1,81 @@
+/*
+ * Copyright 2022, Christian Sigmon <cws@glasket.com>
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+package datastructures
+
+import "fmt"
+
+// An OrderedMap maintains the insertion order of keys into a contained map.
+type OrderedMap[K comparable, V any] struct {
+	mapping map[K]V
+	keys    []K
+}
+
+// Constucts a new OrderedMap with instantiated fields.
+func NewOrderedMap[K comparable, V any](size int) *OrderedMap[K, V] {
+	return &OrderedMap[K, V]{
+		mapping: map[K]V{},
+		keys:    make([]K, 0, size),
+	}
+}
+
+// Returns the key slice of the OrderedMap
+func (m OrderedMap[K, V]) Keys() []K {
+	return m.keys
+}
+
+// Returns the assigned value at the given key, or an error if the key is not present in the map.
+func (m OrderedMap[K, V]) Get(key K) (value V, err error) {
+	var ok bool
+	value, ok = m.mapping[key]
+	if !ok {
+		return value, fmt.Errorf("key %v was not present", key)
+	}
+	return value, nil
+}
+
+// Assigns the given value to the given key.
+//
+// Returns an error if the key is already assigned.
+func (m *OrderedMap[K, V]) Set(key K, value V) error {
+	if m.Contains(key) {
+		return fmt.Errorf("key %v is already present", key)
+	}
+	m.keys = append(m.keys, key)
+	m.mapping[key] = value
+	return nil
+}
+
+// Removes the given key and its assigned value.
+//
+// Returns an error if the key was not assigned.
+func (m *OrderedMap[K, V]) Remove(key K) error {
+	if !m.Contains(key) {
+		return fmt.Errorf("key %v was not present", key)
+	}
+	delete(m.mapping, key)
+	for i, v := range m.keys {
+		if key == v {
+			m.keys = append(m.keys[:i], m.keys[i+1:]...)
+			break
+		}
+	}
+	return nil
+}
+
+// Returns true if the given key is present in the underlying map, otherwise false.
+func (m OrderedMap[K, V]) Contains(key K) bool {
+	if _, ok := m.mapping[key]; ok {
+		return true
+	}
+	return false
+}
+
+// Returns the number of keys in the map.
+func (m OrderedMap[K, V]) Count() int {
+	return len(m.keys)
+}
