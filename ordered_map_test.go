@@ -10,7 +10,7 @@ package datastructures_test
 import (
 	"testing"
 
-	. "glasket.com/datastructures"
+	. "github.com/glasket/datastructures"
 )
 
 // Tests that creation doesn't fail and has a sane default
