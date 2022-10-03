@@ -41,13 +41,11 @@ func (m OrderedMap[K, V]) Get(key K) (value V, err error) {
 // Assigns the given value to the given key.
 //
 // Returns an error if the key is already assigned.
-func (m *OrderedMap[K, V]) Set(key K, value V) error {
-	if m.Contains(key) {
-		return fmt.Errorf("key %v is already present", key)
-	}
-	m.keys = append(m.keys, key)
+func (m *OrderedMap[K, V]) Set(key K, value V) {
 	m.mapping[key] = value
-	return nil
+	if !m.Contains(key) {
+		m.keys = append(m.keys, key)
+	}
 }
 
 // Removes the given key and its assigned value.

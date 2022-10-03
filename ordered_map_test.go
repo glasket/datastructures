@@ -38,6 +38,14 @@ func TestOrderedMapOperations(t *testing.T) {
 	if len(om.Keys()) != om.Count() {
 		t.Error("Key slice and map length mismatch")
 	}
+	om.Set("key", expected+1)
+	if v, _ := om.Get("key"); v != expected+1 {
+		t.Error("Changing assigned value")
+	}
+	// Make sure key isn't reinserted a second time
+	if len(om.Keys()) != om.Count() {
+		t.Error("Key slice and map length mismatch after reassigning key")
+	}
 	if err := om.Remove("key"); err != nil {
 		t.Error("Removal should not throw an error on an existing key")
 	}
@@ -98,6 +106,12 @@ func TestOrderedMapOrdering(t *testing.T) {
 			t.Errorf("Order violation: %v != %v at index %v", v, tests[i].key, i)
 		}
 	}
+
+	// Test order correctness after reassigning key value
+	om.Set(tests[0].key, 2)
+	if om.Keys()[0] != tests[0].key {
+		t.Errorf("First key should be %v, instead got %v", tests[0].key, om.Keys()[0])
+	}
 }
 
 // Tests the error conditions
@@ -105,10 +119,6 @@ func TestOrderedMapErrors(t *testing.T) {
 	om := *NewOrderedMap[string, int](0)
 	if _, e := om.Get("key"); e == nil {
 		t.Error("OrderedMap.Get should error when retrieving non-existent key")
-	}
-	om.Set("key", 1)
-	if e := om.Set("key", 1); e == nil {
-		t.Error("OrderedMap.Set should error when inserting a duplicate key")
 	}
 	om.Remove("key")
 	if e := om.Remove("key"); e == nil {
