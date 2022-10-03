@@ -42,10 +42,10 @@ func (m OrderedMap[K, V]) Get(key K) (value V, err error) {
 //
 // Returns an error if the key is already assigned.
 func (m *OrderedMap[K, V]) Set(key K, value V) {
-	m.mapping[key] = value
 	if !m.Contains(key) {
 		m.keys = append(m.keys, key)
 	}
+	m.mapping[key] = value
 }
 
 // Removes the given key and its assigned value.
