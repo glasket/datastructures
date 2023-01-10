@@ -8,6 +8,7 @@
 package orderedmap_test
 
 import (
+	"reflect"
 	"testing"
 
 	. "github.com/glasket/datastructures/orderedmap"
@@ -111,6 +112,13 @@ func TestOrderedMapOrdering(t *testing.T) {
 	om.Set(tests[0].key, 2)
 	if om.Keys()[0] != tests[0].key {
 		t.Errorf("First key should be %v, instead got %v", tests[0].key, om.Keys()[0])
+	}
+
+	// Test order correctness after SetAndUpdate
+	om.SetAndUpdate(tests[0].key, 3)
+	exp := []int{tests[1].key, tests[2].key, tests[3].key, tests[0].key}
+	if !reflect.DeepEqual(om.Keys(), exp) {
+		t.Errorf("Key order is broken.\nExpected: %v\nActual: %v", exp, om.Keys())
 	}
 }
 

@@ -15,7 +15,7 @@ type OrderedMap[K comparable, V any] struct {
 	keys    []K
 }
 
-// Constucts a new OrderedMap with instantiated fields.
+// Constructs a new OrderedMap with instantiated fields.
 func NewOrderedMap[K comparable, V any](size int) *OrderedMap[K, V] {
 	return &OrderedMap[K, V]{
 		mapping: map[K]V{},
@@ -40,9 +40,33 @@ func (m OrderedMap[K, V]) Get(key K) (value V, err error) {
 
 // Assigns the given value to the given key.
 //
-// Returns an error if the key is already assigned.
+// The key maintains its prior position. To update the position then use SetAndUpdate.
 func (m *OrderedMap[K, V]) Set(key K, value V) {
 	if !m.Contains(key) {
+		m.keys = append(m.keys, key)
+	}
+	m.mapping[key] = value
+}
+
+// Assigns the given value to the given key and shifts the key to the end of the order
+func (m *OrderedMap[K, V]) SetAndUpdate(key K, value V) {
+	if m.Contains(key) {
+		for i, v := range m.keys {
+			if key == v {
+				l := len(m.keys)
+				newKeys := make([]K, l)
+				for j, k := 0, 0; j < l-1; j, k = j+1, k+1 {
+					if j == i {
+						k += 1
+					}
+					newKeys[j] = m.keys[k]
+				}
+				newKeys[l-1] = key
+				m.keys = newKeys
+				break
+			}
+		}
+	} else {
 		m.keys = append(m.keys, key)
 	}
 	m.mapping[key] = value
