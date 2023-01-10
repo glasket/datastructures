@@ -16,8 +16,8 @@ type OrderedMap[K comparable, V any] struct {
 }
 
 // Constructs a new OrderedMap with instantiated fields.
-func NewOrderedMap[K comparable, V any](size int) *OrderedMap[K, V] {
-	return &OrderedMap[K, V]{
+func NewOrderedMap[K comparable, V any](size int) OrderedMap[K, V] {
+	return OrderedMap[K, V]{
 		mapping: map[K]V{},
 		keys:    make([]K, 0, size),
 	}

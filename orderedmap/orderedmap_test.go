@@ -14,9 +14,11 @@ import (
 	. "github.com/glasket/datastructures/orderedmap"
 )
 
+// TODO Cleanup this mess
+
 // Tests that creation doesn't fail and has a sane default
 func TestNewOrderedMap(t *testing.T) {
-	om := *NewOrderedMap[string, int](0)
+	om := NewOrderedMap[string, int](0)
 	if om.Count() != 0 {
 		t.Error("Count should be 0 at creation")
 	}
@@ -24,7 +26,7 @@ func TestNewOrderedMap(t *testing.T) {
 
 // Tests basic operations for correctness
 func TestOrderedMapOperations(t *testing.T) {
-	om := *NewOrderedMap[string, int](0)
+	om := NewOrderedMap[string, int](0)
 	expected := 1
 	om.Set("key", expected)
 	if v, e := om.Get("key"); v != expected || e != nil {
@@ -69,7 +71,7 @@ func TestOrderedMapOrdering(t *testing.T) {
 		{2, 1},
 		{5, 1},
 	}
-	om := *NewOrderedMap[int, int](0)
+	om := NewOrderedMap[int, int](0)
 	for _, v := range tests {
 		om.Set(v.key, v.val)
 	}
@@ -124,7 +126,7 @@ func TestOrderedMapOrdering(t *testing.T) {
 
 // Tests the error conditions
 func TestOrderedMapErrors(t *testing.T) {
-	om := *NewOrderedMap[string, int](0)
+	om := NewOrderedMap[string, int](0)
 	if _, e := om.Get("key"); e == nil {
 		t.Error("OrderedMap.Get should error when retrieving non-existent key")
 	}
