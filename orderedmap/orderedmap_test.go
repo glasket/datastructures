@@ -5,12 +5,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-package datastructures_test
+package orderedmap_test
 
 import (
 	"testing"
 
-	. "github.com/glasket/datastructures"
+	. "github.com/glasket/datastructures/orderedmap"
 )
 
 // Tests that creation doesn't fail and has a sane default
