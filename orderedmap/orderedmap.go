@@ -91,10 +91,8 @@ func (m *OrderedMap[K, V]) Remove(key K) error {
 
 // Returns true if the given key is present in the underlying map, otherwise false.
 func (m OrderedMap[K, V]) Contains(key K) bool {
-	if _, ok := m.mapping[key]; ok {
-		return true
-	}
-	return false
+	_, ok := m.mapping[key]
+	return ok
 }
 
 // Returns the number of keys in the map.
