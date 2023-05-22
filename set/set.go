@@ -181,7 +181,6 @@ func (s Set[V]) SupersetOf(other Set[V]) bool {
 // Returns a JSON array of the set's values.
 //
 // Uses Set.Values.
-
 func (s Set[V]) MarshalJSON() ([]byte, error) {
 	return json.Marshal(s.Values())
 }
@@ -190,6 +189,11 @@ func (s Set[V]) MarshalJSON() ([]byte, error) {
 //
 // Uses NewSetFromSlice, but will return an error if
 // the slice length doesn't match the set count.
+//
+// Pointer receiver is used despite being inconsistent
+// since it simplifies the use of json.Unmarshal.
+// I.e. you can just use var set Set[int], whereas
+// a value receiver would require manually calling NewSet.
 func (s *Set[V]) UnmarshalJSON(data []byte) error {
 	var slice []V
 	err := json.Unmarshal(data, &slice)
