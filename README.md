@@ -1,6 +1,16 @@
-A repository to collect data structures in Go as I find a need for them.
+# WIP
 
-- OrderedMap
-  - Maintains the insertion order of keys into a map
-- Set
-  - Stores unique values in no particular order
+A repository of Go datastructures and related interfaces.
+
+## TODO
+
+- More datastructures
+- More use of the basic interfaces, like more use of Enumerators
+  - NewFromEnumerable
+  - CopyTo(target Enumerable, startAt int)
+  - CopyFrom(target Enumerable, startAt int)
+- More benchmarks
+  - Benchmarks showing why certain design choices were made
+  - Benchmarks comparing to other repos
+  - etc.
+- More documentation

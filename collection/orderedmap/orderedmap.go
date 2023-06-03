@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, Christian Sigmon <cws@glasket.com>
+ * Copyright 2022, 2023 Christian Sigmon <cws@glasket.com>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,6 +8,8 @@
 package orderedmap
 
 import "fmt"
+
+// TODO Rewrite to make use of the collection interfaces
 
 // An OrderedMap maintains the insertion order of keys into a contained map.
 type OrderedMap[K comparable, V any] struct {
