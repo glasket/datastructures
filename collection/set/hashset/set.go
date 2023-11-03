@@ -85,7 +85,7 @@ func (s *Set[V]) Contains(value V) bool {
 
 // String eturns the string representation of the set.
 func (s *Set[V]) String() string {
-	return fmt.Sprintf("Set[%v]", s.ToSlice())
+	return fmt.Sprintf("Set[%v]", s.Values())
 }
 
 // IsEmpty eturns true if the set is empty.
@@ -99,7 +99,7 @@ func (s *Set[V]) Count() int {
 }
 
 // ToSlice eturns a slice of all values in the set.
-func (s *Set[V]) ToSlice() []V {
+func (s *Set[V]) Values() []V {
 	if s.values != nil {
 		return s.values
 	}
@@ -137,7 +137,7 @@ func (s *Set[V]) Union(other set.ISet[V]) set.ISet[V] {
 	for v := range s.set {
 		union.Add(v)
 	}
-	for _, v := range other.ToSlice() {
+	for _, v := range other.Values() {
 		union.Add(v)
 	}
 
@@ -223,7 +223,7 @@ func (s *Set[V]) SupersetOf(other set.ISet[V]) bool {
 //
 // Uses Set.Values.
 func (s *Set[V]) MarshalJSON() ([]byte, error) {
-	return json.Marshal(s.ToSlice())
+	return json.Marshal(s.Values())
 }
 
 // UnmarshalJSON turns a JSON array into a Set.

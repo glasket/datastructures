@@ -11,6 +11,7 @@ package collection
 import "github.com/glasket/datastructures/interfaces/enumerator"
 
 type IImmutableCollection[V comparable] interface {
+	enumerator.IEnumerable[V]
 	Contains(v V) bool
 	Count() int
 	IsEmpty() bool
@@ -18,7 +19,6 @@ type IImmutableCollection[V comparable] interface {
 }
 
 type ICollection[V comparable] interface {
-	enumerator.IEnumerable[V]
 	IImmutableCollection[V]
 	Add(v V)
 	Remove(v V)

@@ -86,7 +86,7 @@ func (l *List[V]) Count() int {
 	return len(l.elements)
 }
 
-func (l *List[V]) ToSlice() []V {
+func (l *List[V]) Values() []V {
 	return l.elements
 }
 

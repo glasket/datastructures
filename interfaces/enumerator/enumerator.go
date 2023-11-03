@@ -12,7 +12,7 @@ package enumerator
 // a structure must provider an enumerator and a way to get a slice of values.
 type IEnumerable[V any] interface {
 	GetEnumerator() IEnumerator[V]
-	ToSlice() []V
+	Values() []V
 }
 
 // IEnumerator provides the functionality to enumerate over a collection.
@@ -43,7 +43,7 @@ func (e *enumerable[V]) GetEnumerator() IEnumerator[V] {
 	}
 }
 
-func (e *enumerable[V]) ToSlice() []V {
+func (e *enumerable[V]) Values() []V {
 	return e.elements
 }
 

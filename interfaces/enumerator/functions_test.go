@@ -98,10 +98,10 @@ func TestFilter(t *testing.T) {
 	filtered := enumerator.Filter(s, func(i int) bool {
 		return i%2 == 0
 	})
-	if len(filtered.ToSlice()) != PERM_SIZE/2 {
-		t.Errorf("Filter did not filter out all odd elements, expected %d elements, got %d", PERM_SIZE/2, len(filtered.ToSlice()))
+	if len(filtered.Values()) != PERM_SIZE/2 {
+		t.Errorf("Filter did not filter out all odd elements, expected %d elements, got %d", PERM_SIZE/2, len(filtered.Values()))
 	}
-	for _, v := range filtered.ToSlice() {
+	for _, v := range filtered.Values() {
 		if v%2 != 0 {
 			t.Errorf("Filter did not filter out all odd elements, found %d", v)
 		}
@@ -121,33 +121,33 @@ func TestReduce(t *testing.T) {
 func TestRange(t *testing.T) {
 	// Test ascending range
 	s := enumerator.Range(0, 10)
-	if len(s.ToSlice()) != 10 {
-		t.Errorf("Range did not return %d elements, got %d", 10, len(s.ToSlice()))
+	if len(s.Values()) != 10 {
+		t.Errorf("Range did not return %d elements, got %d", 10, len(s.Values()))
 	}
 	for i := 0; i < 10; i++ {
-		if s.ToSlice()[i] != i {
-			t.Errorf("Range did not return correct elements, expected %d, got %d", i, s.ToSlice()[i])
+		if s.Values()[i] != i {
+			t.Errorf("Range did not return correct elements, expected %d, got %d", i, s.Values()[i])
 		}
 	}
 
 	// Test descending range
 	s = enumerator.Range(10, 0)
-	if len(s.ToSlice()) != 10 {
-		t.Errorf("Range did not return %d elements, got %d", 10, len(s.ToSlice()))
+	if len(s.Values()) != 10 {
+		t.Errorf("Range did not return %d elements, got %d", 10, len(s.Values()))
 	}
 	for i := 10; i > 0; i-- {
-		if s.ToSlice()[10-i] != i {
-			t.Errorf("Range did not return correct elements, expected %d, got %d", i, s.ToSlice()[10-i])
+		if s.Values()[10-i] != i {
+			t.Errorf("Range did not return correct elements, expected %d, got %d", i, s.Values()[10-i])
 		}
 	}
 
 	// Test single value range
 	s = enumerator.Range(10, 10)
-	if len(s.ToSlice()) != 1 {
-		t.Errorf("Range did not return %d elements, got %d", 1, len(s.ToSlice()))
+	if len(s.Values()) != 1 {
+		t.Errorf("Range did not return %d elements, got %d", 1, len(s.Values()))
 	}
-	if s.ToSlice()[0] != 10 {
-		t.Errorf("Range did not return correct elements, expected %d, got %d", 10, s.ToSlice()[0])
+	if s.Values()[0] != 10 {
+		t.Errorf("Range did not return correct elements, expected %d, got %d", 10, s.Values()[0])
 	}
 }
 

@@ -32,7 +32,7 @@ type parallelEnumerator[V any] struct {
 }
 
 func asParallel[V any](e IEnumerable[V]) *parallelEnumerator[V] {
-	vals := e.ToSlice()
+	vals := e.Values()
 	return &parallelEnumerator[V]{
 		partitions: sliceutils.Chunk(vals, cc),
 		length:     len(vals),

@@ -92,7 +92,7 @@ func TestSetValues(t *testing.T) {
 	set := New[int](0)
 	set.Add(5)
 	set.Add(6)
-	values := set.ToSlice()
+	values := set.Values()
 	if len(values) != 2 {
 		t.Errorf("Expected Values to return a slice of size 2, got size %d", len(values))
 	}

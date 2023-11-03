@@ -81,12 +81,12 @@ func TestParallelMap(t *testing.T) {
 	out := enumerator.ParallelMap[int](s, func(i int) int {
 		return i * 2
 	})
-	if len(out.ToSlice()) != PERM_SIZE {
-		t.Fatalf("Expected ParallelMap to return %d elements, got %d", PERM_SIZE, len(out.ToSlice()))
+	if len(out.Values()) != PERM_SIZE {
+		t.Fatalf("Expected ParallelMap to return %d elements, got %d", PERM_SIZE, len(out.Values()))
 	}
 	for i := 0; i < PERM_SIZE; i++ {
-		expected := s.ToSlice()[i] * 2
-		got := out.ToSlice()[i]
+		expected := s.Values()[i] * 2
+		got := out.Values()[i]
 		if expected != got {
 			t.Errorf("Expected ParallelMap to return %d at index %d, got %d", expected, i, got)
 		}
@@ -99,11 +99,11 @@ func TestParallelFilter(t *testing.T) {
 	out := enumerator.ParallelFilter[int](s, func(i int) bool {
 		return i%2 == 0
 	})
-	if len(out.ToSlice()) != PERM_SIZE/2 {
-		t.Fatalf("Expected ParallelFilter to return %d elements, got %d", PERM_SIZE/2, len(out.ToSlice()))
+	if len(out.Values()) != PERM_SIZE/2 {
+		t.Fatalf("Expected ParallelFilter to return %d elements, got %d", PERM_SIZE/2, len(out.Values()))
 	}
 	for i := 0; i < PERM_SIZE/2; i++ {
-		got := out.ToSlice()[i]
+		got := out.Values()[i]
 		if got%2 != 0 {
 			t.Errorf("Expected ParallelFilter to only return evens, got %d at index %d", got, i)
 		}
