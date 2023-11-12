@@ -17,9 +17,9 @@ import (
 // The length of each slice in the returned slice is len(s) / chunkCount.
 //
 // If len(s) is not evenly divisible by chunkCount, the last slice will be smaller.
-func Chunk[V any](s []V, chunkCount int) [][]V {
+func Chunk[S ~[]E, E any](s S, chunkCount int) []S {
 	chunkSize := mathutils.IntDivCeil(len(s), chunkCount)
-	chunks := make([][]V, 0, chunkCount)
+	chunks := make([]S, 0, chunkCount)
 	for i := 0; i < len(s); i += chunkSize {
 		end := i + chunkSize
 		if end > len(s) {
@@ -39,7 +39,7 @@ func Chunk[V any](s []V, chunkCount int) [][]V {
 // be length[0].
 //
 // Any other values in the length array are ignored.
-func Join[V any](s [][]V, length ...int) []V {
+func Join[S ~[]E, E any](s []S, length ...int) S {
 	var l int = 0
 	if len(length) == 0 {
 		for _, chunk := range s {
@@ -49,7 +49,7 @@ func Join[V any](s [][]V, length ...int) []V {
 		l = length[0]
 	}
 
-	joined := make([]V, 0, l)
+	joined := make(S, 0, l)
 	for _, chunk := range s {
 		joined = append(joined, chunk...)
 	}
